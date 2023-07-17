@@ -98,6 +98,50 @@ class _NewExpenseState extends State<NewExpense> {
     super.dispose();
   }
 
+  Widget _title() {
+    return TextField(
+      controller: _titleController,
+      maxLength: 50,
+      decoration: const InputDecoration(
+        label: Text('Title'),
+      ),
+    );
+  }
+
+  Widget _amount() {
+    return Expanded(
+      child: TextField(
+        controller: _amountController,
+        keyboardType: TextInputType.number,
+        decoration: const InputDecoration(
+          prefixText: '\$ ',
+          label: Text('Amount'),
+        ),
+      ),
+    );
+  }
+
+  Widget _category() {
+    return DropdownButton(
+        value: _selectedCategory,
+        items: Category.values
+            .map(
+              (category) => DropdownMenuItem(
+                value: category,
+                child: Text(
+                  category.name.toUpperCase(),
+                ),
+              ),
+            )
+            .toList(),
+        onChanged: (value) {
+          if (value == null) return;
+          setState(() {
+            _selectedCategory = value;
+          });
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     final keyboardSpace = MediaQuery.of(context).viewInsets.bottom;
@@ -115,57 +159,17 @@ class _NewExpenseState extends State<NewExpense> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(
-                        child: TextField(
-                          controller: _titleController,
-                          maxLength: 50,
-                          decoration: const InputDecoration(
-                            label: Text('Title'),
-                          ),
-                        ),
-                      ),
+                      Expanded(child: _title()),
                       const SizedBox(width: 24),
-                      Expanded(
-                        child: TextField(
-                          controller: _amountController,
-                          keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            prefixText: '\$ ',
-                            label: Text('Amount'),
-                          ),
-                        ),
-                      ),
+                      _amount(),
                     ],
                   )
                 else
-                  TextField(
-                    controller: _titleController,
-                    maxLength: 50,
-                    decoration: const InputDecoration(
-                      label: Text('Title'),
-                    ),
-                  ),
+                  _title(),
                 if (width >= 600)
                   Row(
                     children: [
-                      DropdownButton(
-                          value: _selectedCategory,
-                          items: Category.values
-                              .map(
-                                (category) => DropdownMenuItem(
-                                  value: category,
-                                  child: Text(
-                                    category.name.toUpperCase(),
-                                  ),
-                                ),
-                              )
-                              .toList(),
-                          onChanged: (value) {
-                            if (value == null) return;
-                            setState(() {
-                              _selectedCategory = value;
-                            });
-                          }),
+                      _category(),
                       const SizedBox(width: 24),
                       Expanded(
                         child: Row(
@@ -188,16 +192,7 @@ class _NewExpenseState extends State<NewExpense> {
                 else
                   Row(
                     children: [
-                      Expanded(
-                        child: TextField(
-                          controller: _amountController,
-                          keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            prefixText: '\$ ',
-                            label: Text('Amount'),
-                          ),
-                        ),
-                      ),
+                      _amount(),
                       const SizedBox(width: 16),
                       Expanded(
                         child: Row(
@@ -237,24 +232,7 @@ class _NewExpenseState extends State<NewExpense> {
                 else
                   Row(
                     children: [
-                      DropdownButton(
-                          value: _selectedCategory,
-                          items: Category.values
-                              .map(
-                                (category) => DropdownMenuItem(
-                                  value: category,
-                                  child: Text(
-                                    category.name.toUpperCase(),
-                                  ),
-                                ),
-                              )
-                              .toList(),
-                          onChanged: (value) {
-                            if (value == null) return;
-                            setState(() {
-                              _selectedCategory = value;
-                            });
-                          }),
+                      _category(),
                       const Spacer(),
                       TextButton(
                         onPressed: () {
