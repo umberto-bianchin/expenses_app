@@ -142,6 +142,25 @@ class _NewExpenseState extends State<NewExpense> {
         });
   }
 
+  Widget _date() {
+    return Expanded(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(_selectedDate == null
+              ? 'No date selected'
+              : formatter.format(_selectedDate!)),
+          IconButton(
+              onPressed: _presentDatePicker,
+              icon: const Icon(
+                Icons.calendar_month,
+              ))
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final keyboardSpace = MediaQuery.of(context).viewInsets.bottom;
@@ -171,22 +190,7 @@ class _NewExpenseState extends State<NewExpense> {
                     children: [
                       _category(),
                       const SizedBox(width: 24),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(_selectedDate == null
-                                ? 'No date selected'
-                                : formatter.format(_selectedDate!)),
-                            IconButton(
-                                onPressed: _presentDatePicker,
-                                icon: const Icon(
-                                  Icons.calendar_month,
-                                ))
-                          ],
-                        ),
-                      )
+                      _date(),
                     ],
                   )
                 else
@@ -194,22 +198,7 @@ class _NewExpenseState extends State<NewExpense> {
                     children: [
                       _amount(),
                       const SizedBox(width: 16),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(_selectedDate == null
-                                ? 'No date selected'
-                                : formatter.format(_selectedDate!)),
-                            IconButton(
-                                onPressed: _presentDatePicker,
-                                icon: const Icon(
-                                  Icons.calendar_month,
-                                ))
-                          ],
-                        ),
-                      )
+                      _date(),
                     ],
                   ),
                 const SizedBox(height: 16),
